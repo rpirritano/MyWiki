@@ -35,7 +35,11 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+gem 'devise'
+gem 'delayed_job_active_record'
 
 gem 'bootstrap-sass'
 
 gem 'rails-controller-testing'
+
+gem 'jquery-turbolinks'
