@@ -19,3 +19,6 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+#added to ignore the file where sendgrid info is storede
+/config/application.yml

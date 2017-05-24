@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 #config.active_job.queue_adapter = :delayed_job
 
+
+
 module Blocipedia
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

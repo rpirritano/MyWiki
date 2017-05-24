@@ -13,18 +13,10 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   #added for Devise from website tutorial
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'sitepoint-devise.herokuapp.com' }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.default_url_options = { host: 'sitepoint-devise.herokuapp.com' }
 
-  ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com',
-    :enable_starttls_auto => true
-}
+
   #from devise instruction
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
@@ -53,8 +45,8 @@ Rails.application.configure do
   #   arguments: '-i'
   # }
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_options = {from: 'no-reply@example.com'}
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_options = {from: 'no-replyB@example.com'}
   
 
   config.action_mailer.perform_caching = false
@@ -76,8 +68,10 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
+  config.action_mailer.default_url_options = { host: 'localhost' }
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.raise_delivery_errors = true
 end
