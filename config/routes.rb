@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'welcome/index'
+
+
+
+
+  #resources :users, only: [:show]
+
+  #get 'welcome/index'
 
   get 'welcome/about'
 
-  root 'welcome#index'
+  get '/private', to: 'pages#private', as: :secret
+
+  root to: 'welcome#index'
+
+
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

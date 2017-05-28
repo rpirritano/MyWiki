@@ -43,3 +43,5 @@ gem 'bootstrap-sass'
 gem 'rails-controller-testing'
 
 gem 'jquery-turbolinks'
+
+gem 'devise_zxcvbn'
