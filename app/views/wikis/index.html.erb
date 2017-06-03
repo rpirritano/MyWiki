@@ -1,6 +1,6 @@
- <h1>All Wikis</h1>
-
- <% @wiki.each do |wiki| %>
+<h1>All Wikis</h1>
+<%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
+ <% @wikis.each do |wiki| %>
     <div class="media">
       <div class="media-body">
         <h4 class="media-heading">

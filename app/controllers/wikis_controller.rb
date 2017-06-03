@@ -1,20 +1,33 @@
 class WikisController < ApplicationController
+ 
+  before_action :authenticate_user!, except: [:index, :show, :edit, :update]
+
+
+
   def index
-    @wiki = Wiki.all
+    @wikis = Wiki.all
+    #@wikis = policy_scope(Wiki)
+    if current_user.present?
+      authorize @wikis
+    else
+      skip_authorization
+    end
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
 
   def create
-    @wiki = Wiki.new
-    @wiki.title = params[:wiki][:title]
-    @wiki.body = params[:wiki][:body]
+    @wiki = Wiki.new(wiki_params)
+    @wiki.user = current_user
+    authorize @wiki
     
     if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -27,12 +40,13 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
   
   def update
     @wiki = Wiki.find(params[:id])
-    @wiki.title = params[:wiki][:title]
-    @wiki.body = params[:wiki][:body]
+    @wiki.assign_attributes(wiki_params)
+    authorize @wiki
     
     if @wiki.save
       flash[:notice] = "Wiki was updated."
@@ -45,6 +59,7 @@ class WikisController < ApplicationController
   
   def destroy
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     
     if @wiki.destroy
        flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
@@ -54,5 +69,11 @@ class WikisController < ApplicationController
        render :show
      end
    end
+
+private
+
+def wiki_params
+  params.require(:wiki).permit(:title, :body, :private)
+end
 
 end

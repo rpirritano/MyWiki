@@ -46,3 +46,5 @@ gem 'rails-controller-testing'
 gem 'jquery-turbolinks'
 
 gem 'devise_zxcvbn'
+
+gem 'pundit'

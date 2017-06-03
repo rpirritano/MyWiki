@@ -122,6 +122,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -246,6 +248,7 @@ DEPENDENCIES
   jquery-turbolinks
   listen
   pry-rails
+  pundit
   rails (~> 5.0.3)
   rails-controller-testing
   rails_12factor
