@@ -1,0 +1,27 @@
+<% if current_user.standard? %>
+  <h3>Upgrade to a premium Blocipedia Account.  For $15, get more out of your favorite website!</h3>
+  <p>With a premium account you will be able to create private wikis, as well as have access to all private wikis!</p>
+
+  <%= form_tag charges_path do %>
+    <article>
+      <% if flash[:error].present? %>
+        <div id="error_explanation">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
+
+      <label class="amount">
+        <span>Amount: $15.00</span>
+      </label>
+    </article>
+    
+    <script class='stripe-button' src="https://checkout.stripe.com/checkout.js" 
+          data-key="<%= @stripe_btn_data[:key] %>" 
+          data-amount="<%= @stripe_btn_data[:amount] %>" 
+          data-description="<%= @stripe_btn_data[:description] %>" ></script>
+<% end %>
+
+<% elsif current_user.premium? %>
+  <h4>Click below To downgrade your account back to a standard Blocipedia account.</h4>
+  <%= link_to "Downgrade Account", @charge, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to downgrade your account?'} %>
+<% end %>

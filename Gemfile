@@ -48,3 +48,5 @@ gem 'jquery-turbolinks'
 gem 'devise_zxcvbn'
 
 gem 'pundit'
+
+gem 'stripe'

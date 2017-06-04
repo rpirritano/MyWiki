@@ -36,6 +36,19 @@
   <%= f.submit "Update", class: 'btn btn-primary' %>
 <% end %>
 
+<div class="authform">
+  
+  <h3>Account Status</h3>
+  <p>Your account is currently: <strong><%= current_user.role.capitalize %></p></strong>
+  <% if current_user.role == 'premium' %>
+    <%= button_to "Downgrade my account", downgrade_path, :data => { :confirm => "Are you sure?" }, :class => 'button right' %>
+  <% else %>
+    <%= button_to "Upgrade my account", charges_path, :data => { :confirm => "Are you sure?" }, :class => 'button right' %>
+  <% end %>
+</div>
+
+
+
 <h3>Cancel my account</h3>
 
 <p>Unhappy?
@@ -43,4 +56,3 @@
                 data: { confirm: "Are you sure?" }, method: :delete %>
 </p>
 
-<%= link_to "Back", :back, class: 'btn btn-default btn-sm' %>
