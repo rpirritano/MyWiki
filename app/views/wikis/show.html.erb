@@ -1,11 +1,17 @@
- <h1><%= @wiki.title %></h1>
- <br/>
- <small>
-    submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.email %>
- </small>
- <div class="row">
+<div class="">
+  <div>
+    <h1><%= @wiki.title %>
+    <br/>
+    <small>
+       submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.email %>
+    </small>
+    </h1>
+  </div>
+  <br/>
+  <div class="row">
    <div class="col-md-8">
      <p><%= @wiki.body %></p>
+     Private: <%= @wiki.private %> <!-- remove me -->
    </div>
    <% if user_is_authorized_for_wikis?(@wiki) %>
      <div class="col-md-3">
@@ -14,8 +20,15 @@
    <% if current_user %>
      <div class="col-md-4">
        <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+      
    <% end %>
  
+   </div>
+   
+ </div>
+ <div class="row">
+   <div class="col-md-10">
+     <%= link_to 'Back', wikis_path, class: "pull-right" %>
    </div>
  </div>
 </div>

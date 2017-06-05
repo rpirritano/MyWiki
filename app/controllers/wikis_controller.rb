@@ -1,12 +1,12 @@
 class WikisController < ApplicationController
- 
+  before_action :set_wiki, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show, :edit, :update]
 
 
 
   def index
-    @wikis = Wiki.all
-    #@wikis = policy_scope(Wiki)
+    #@wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
     if current_user.present?
       authorize @wikis
     else
@@ -69,8 +69,25 @@ class WikisController < ApplicationController
        render :show
      end
    end
+   
+  def current_user_admin?
+    current_user.admin?
+  end
+  
+  helper_method :current_user_admin?
+
+  def current_user_premium?
+    current_user.premium?
+  end
+  
+  helper_method :current_user_premium?
+
 
 private
+
+def set_wiki
+  @wiki = Wiki.find(params[:id])
+end
 
 def wiki_params
   params.require(:wiki).permit(:title, :body, :private)

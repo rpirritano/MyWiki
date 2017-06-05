@@ -49,7 +49,7 @@ class ChargesController < ApplicationController
     
     def downgrade
         current_user.standard!
-        #current_user.wikis.update_all(private: false)
+        current_user.wikis.update_all(private: false)
         redirect_to edit_user_registration_path(current_user)
         flash[:notice] = "Your account has been downgraded to a Standard Account. All Wikis are now public."
     end
