@@ -50,3 +50,6 @@ gem 'devise_zxcvbn'
 gem 'pundit'
 
 gem 'stripe'
+
+# Use redcarpet to parse markdown
+gem 'redcarpet'

@@ -10,7 +10,7 @@
   <br/>
   <div class="row">
    <div class="col-md-8">
-     <p><%= @wiki.body %></p>
+     <p><%= markdown(@wiki.body) %></p>
      Private: <%= @wiki.private %> <!-- remove me -->
    </div>
    <% if user_is_authorized_for_wikis?(@wiki) %>

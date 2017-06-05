@@ -5,7 +5,8 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    scope.where(id: record.id).exists?
+    #scope.where(id: record.id).exists?
+    !record.private? || (user.present? && (user.admin? || record.user == user || record.users.include?(user)))
   end
 
   def create?
