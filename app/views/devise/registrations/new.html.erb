@@ -1,32 +1,31 @@
-<% header "Sign Up" %>
+<div class="authform">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <h3>Sign up</h3>
+        <%= devise_error_messages! %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+        <div class="form-group">
+            <%= f.label :email %><br/>
+            <%= f.email_field :email, autofocus: true %>
+        </div>
 
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+        <div class="form-group">
+            <%= f.label :password %>
+            <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %>
+                characters minimum)</em>
+            <% end %><br/>
+            <%= f.password_field :password, autocomplete: "off" %>
+        </div>
 
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: 'form-control' %>
-  </div>
+        <div class="form-group">
+            <%= f.label :password_confirmation %><br/>
+            <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        </div>
 
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "off", class: 'form-control estimate-password' %>
-    <% if @validatable %>
-      <span class="help-block"><%= @minimum_password_length %> characters minimum</span>
+        <div class="actions">
+            <%= f.submit "Sign up", :class => 'button left' %>
+        </div>
+        <br />
+        <%= render "devise/shared/links" %>
     <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control estimate-password' %>
-  </div>
-
-  <%= f.submit "Sign up", class: 'btn btn-primary' %>
-<% end %>
-<hr>
-<%= render "devise/shared/links" %>
+</div>

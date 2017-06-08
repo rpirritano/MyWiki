@@ -1,26 +1,37 @@
-<h1>All Wikis</h1>
-
-<% if current_user %>
-  <div class="col-md-8">
-    <%= link_to "New Wiki", new_wiki_path, class: 'pull-right btn btn-success' %>
-  </div>
-<% end %>
-<br>
-</br>
-
- <div class="row">
-   <div class="col-md-8">
-     <% @wikis.each do |wiki| %>
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
-              <%= link_to wiki.title, wiki %>
-           </h4>
-           <small>
-             <%= wiki.body %><br />
-             <%= wiki.private %> <!-- remove me -->
-           </small>
-         </div>
-       </div>
-     <% end %>
-   </div>
+<div class="">
+    <h1>Wikis</h1>
+    <div class="divider"></div>
+    <div class="row">
+        <div class="col-md-8">
+            <% @wikis.each do |wiki| %>
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <%= link_to wiki.title, wiki %>
+                        </h4>
+                        <small>
+                            <%= markdown(wiki.body) %>
+                            
+                            <div>
+                                <% if wiki.private? %>
+                                    <span>Private Wiki</span>
+                                <% else %>
+                                    <span>Public Wiki</span>
+                                <% end %>
+                                <br />
+                                <% if wiki.users.include?(current_user) %>
+                                    <span>Collaborator</span>
+                                <% end %>
+                            </div>
+                        </small>
+                     </div>
+                </div>
+            <% end %>
+        </div>
+        <% if current_user %>
+            <div class="col-md-4">
+                <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
+            </div>
+        <% end %>
+    </div>
+</div>

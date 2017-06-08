@@ -1,7 +1,7 @@
 class WikiPolicy < ApplicationPolicy
 
   def index?
-    user.present?
+    true
   end
 
   def show?
@@ -10,7 +10,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin? || user
+    user.present?
   end
 
   def new?
@@ -26,7 +26,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? || record.user == user
+     (user.admin? || (record.user == user)) if user
   end
 
   class Scope
@@ -38,13 +38,28 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.admin?
-        scope.all
-      elsif user.premium?
-        scope.where('private IS NULL OR private = ? OR (private = ? AND user_id = ?)', false, true, @user.id)
-      else
-        scope.where(private: false)
+      wikis = []
+      if user.try(:admin?)
+        wikis = scope.all # If the user is an admin, scope all the wikis
+      elsif user.try(:premium?)
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.private? == false || wiki.user == user || wiki.users.include?(user)
+            wikis << wiki # If the user is premium, scope all public wikis and wikis that have created, and private wikis they are collaborators on
+          end
+        end
+
+      elsif user.try(:standard?)
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.private? == false || wiki.users.include?(user)
+            wikis << wiki # If the user is a standard user, scope in all public wikis and private wikis they are collaborators on
+          end
+        end
+       else
+        wikis = scope.where(private: false)
       end
+      wikis
     end
   end
 end

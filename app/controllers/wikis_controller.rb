@@ -7,15 +7,10 @@ class WikisController < ApplicationController
   def index
     #@wikis = Wiki.all
     @wikis = policy_scope(Wiki)
-    if current_user.present?
-      authorize @wikis
-    else
-      skip_authorization
-    end
   end
 
   def show
-    @wiki = Wiki.find(params[:id])
+   # @wiki = Wiki.find(params[:id])
     authorize @wiki
   end
 
@@ -25,12 +20,12 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new(wiki_params)
-    @wiki.user = current_user
+    @wiki = current_user.wikis.new(wiki_params)
+    # @wiki.user = current_user
     authorize @wiki
     
     if @wiki.save
-      flash[:notice] = "Wiki was saved."
+      flash[:notice] = "Wiki was saved successfully."
       redirect_to @wiki
     else
       flash.now[:alert] = "There was an error saving the wiki. Please try again."
@@ -39,17 +34,16 @@ class WikisController < ApplicationController
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])
+    #@wiki = Wiki.find(params[:id])
     authorize @wiki
   end
   
   def update
-    @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
     authorize @wiki
     
     if @wiki.save
-      flash[:notice] = "Wiki was updated."
+      flash[:notice] = "Wiki was updated successfully."
       redirect_to @wiki
     else
        flash.now[:alert] = "There was an error saving the wiki. Please try again."
@@ -58,7 +52,6 @@ class WikisController < ApplicationController
   end
   
   def destroy
-    @wiki = Wiki.find(params[:id])
     authorize @wiki
     
     if @wiki.destroy
@@ -90,7 +83,8 @@ def set_wiki
 end
 
 def wiki_params
-  params.require(:wiki).permit(:title, :body, :private)
+  params.require(:wiki).permit(:title, :body, :private, :user_id)
+
 end
 
 end
